@@ -8,7 +8,6 @@ import time
 from machinekit import launcher
 from machinekit import rtapi
 
-launcher.register_exit_handler()
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 parser = argparse.ArgumentParser(description='This is the motorctrl demo run script '
@@ -34,9 +33,9 @@ try:
     launcher.check_installation()
     launcher.cleanup_session()
     launcher.start_realtime()
-    # launcher.load_hal_file('halanduino.hal')
-    rtapi.init_RTAPI()
-    import anddemo
+    launcher.load_hal_file('anddemo.py')
+    launcher.register_exit_handler()  # needs to executed after HAL files
+
     if args.config:
         # the point-of-contact for QtQUickVCP
         launcher.start_process('configserver -n AND-Demo .')
