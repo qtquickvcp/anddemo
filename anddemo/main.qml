@@ -8,8 +8,8 @@ ApplicationWindow {
     id: applicationWindow
 
     visible: true
-    width: 500
-    height: 700
+    width: 700
+    height: 500
     title: connectionWindow.title
 
     ConnectionWindow {
@@ -17,7 +17,9 @@ ApplicationWindow {
 
         anchors.fill: parent
         defaultTitle: "anddemo"
-        autoSelectInstance: false
+        //autoSelectInstance: true
+        autoSelectApplication: true
+        mode: "local"
         applications: [
             ApplicationDescription {
                 sourceDir: "qrc:/anddemo.AND-Demo/"
