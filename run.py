@@ -13,7 +13,7 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 parser = argparse.ArgumentParser(description='This is the motorctrl demo run script '
                                  'it demonstrates how a run script could look like '
                                  'and of course starts the motorctrl demo')
-parser.add_argument('-c', '--config', help='Starts the config server', action='store_true')
+parser.add_argument('-nc', '--no_config', help='Disables the config server', action='store_true')
 parser.add_argument('-l', '--local', help='Enable local mode only', action='store_true')
 parser.add_argument('-g', '--gladevcp', help='Starts the GladeVCP user interface', action='store_true')
 parser.add_argument('-s', '--halscope', help='Starts the halscope', action='store_true')
@@ -29,6 +29,14 @@ if args.debug:
 #    # override default $MACHINEKIT_INI with a version which was REMOTE=1
 #    launcher.set_machinekit_ini('machinekit.ini')
 
+
+def check_mklaucher():
+    try:
+        subprocess.check_output(['pgrep', 'mklauncher'])
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
 try:
     launcher.check_installation()
     launcher.cleanup_session()
@@ -36,7 +44,10 @@ try:
     launcher.load_hal_file('anddemo.py')
     launcher.register_exit_handler()  # needs to executed after HAL files
 
-    if args.config:
+    if not check_mklaucher():  # start mklauncher if not running to make things easier
+        launcher.start_process('mklauncher .')
+
+    if not args.no_config:
         # the point-of-contact for QtQUickVCP
         launcher.start_process('configserver -n AND-Demo .')
     if args.gladevcp:
