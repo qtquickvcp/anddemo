@@ -7,6 +7,7 @@ import argparse
 import time
 from machinekit import launcher
 from machinekit import rtapi
+from machinekit import config
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
@@ -25,10 +26,9 @@ args = parser.parse_args()
 if args.debug:
     launcher.set_debug_level(5)
 
-#if not args.local:
-#    # override default $MACHINEKIT_INI with a version which was REMOTE=1
-#    launcher.set_machinekit_ini('machinekit.ini')
-
+if 'MACHINEKIT_INI' not in os.environ:  # export for package installs
+    mkconfig = config.Config()
+    os.environ['MACHINEKIT_INI'] = mkconfig.MACHINEKIT_INI
 
 def check_mklaucher():
     try:
