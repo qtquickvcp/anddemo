@@ -6,7 +6,6 @@ import subprocess
 import argparse
 import time
 from machinekit import launcher
-from machinekit import rtapi
 from machinekit import config
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
@@ -30,22 +29,14 @@ if 'MACHINEKIT_INI' not in os.environ:  # export for package installs
     mkconfig = config.Config()
     os.environ['MACHINEKIT_INI'] = mkconfig.MACHINEKIT_INI
 
-def check_mklaucher():
-    try:
-        subprocess.check_output(['pgrep', 'mklauncher'])
-        return True
-    except subprocess.CalledProcessError:
-        return False
-
 try:
     launcher.check_installation()
-    launcher.cleanup_session()
-    launcher.start_realtime()
-    launcher.load_hal_file('anddemo.py')
-    launcher.register_exit_handler()  # needs to executed after HAL files
+    launcher.cleanup_session()  # kill any running Machinekit instances
+    launcher.start_realtime()  # start Machinekit realtime environment
+    launcher.load_hal_file('anddemo.py')  # load the main HAL file
+    launcher.register_exit_handler()  # enable on ctrl-C, needs to executed after HAL files
 
-    if not check_mklaucher():  # start mklauncher if not running to make things easier
-        launcher.start_process('mklauncher .')
+    launcher.ensure_mklauncher()  # ensure mklauncher is started
 
     if not args.no_config:
         # the point-of-contact for QtQUickVCP

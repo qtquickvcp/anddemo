@@ -23,6 +23,7 @@ rcomp.newpin('button1', hal.HAL_BIT, hal.HAL_OUT)
 rcomp.newpin('led', hal.HAL_BIT, hal.HAL_IN)
 rcomp.ready()
 
+# link remote component pins
 rcomp.pin('button0').link(input0)
 rcomp.pin('button1').link(input1)
 rcomp.pin('led').link(output)
