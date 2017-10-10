@@ -1,7 +1,6 @@
 # HAL AND Demo
-This is a very simple HAL AND demo. To start the demo download the latest and
-greatest version of the MachinekitClient from the build server:
-[MachinekitClient Builds](http://buildbot.roessler.systems/files/machinekit-client/)
+This is a very simple HAL AND demo. To start the demo download the MachinekitClient from the:
+[QtQuickVcp download section](https://github.com/qtquickvcp/QtQuickVcp#download)
 
 ## Starting the demo
 You can start the Machinekit demo application by running the start script:
