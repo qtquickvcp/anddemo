@@ -10,7 +10,7 @@ from machinekit import config
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-parser = argparse.ArgumentParser(description='This is the motorctrl demo run script '
+parser = argparse.ArgumentParser(description='This is the anddemo demo run script '
                                  'it demonstrates how a run script could look like '
                                  'and of course starts the motorctrl demo')
 parser.add_argument('-nc', '--no_config', help='Disables the config server', action='store_true')
